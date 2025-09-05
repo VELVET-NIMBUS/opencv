@@ -1,4 +1,5 @@
 import cv2 as cv
+import numpy as np
 
 #reading the image as grid of pixel
 img = cv.imread('color-shapes.jpg') 
@@ -7,19 +8,15 @@ img = cv.imread('color-shapes.jpg')
 #showing the image
 cv.imshow('color-shapes.jpg',img)
 
-#converting the image to grayscale and showing that grayscale
-gray = cv.cvtColor(img,cv.COLOR_BGR2GRAY)
-cv.imshow('Gray',gray)
+#specifying hsu value limits for green
+lower = np.array([40,150,20])
+upper = np.array([75,255,255])
 
+#converting image from bgr to hsv format, applying mask and displaying mask
+image = cv.cvtColor(img,cv.COLOR_BGR2HSV)
+mask = cv.inRange(image,lower,upper)
 
-#detecting edges
-canny = cv.Canny(img,125,175)
-cv.imshow('Canny Edges',canny)
-
-#finding contours using method which returns contours and heirarchies
-contours, heirarchies = cv.findContours(canny,cv.RETR_LIST,cv.CHAIN_APPROX_SIMPLE)
-print(f'{len(contours)} contour(s) found!')
-
+cv.imshow('mask',mask)
 
 #holds the image display until a keyboard key is pressed
 cv.waitKey(0)
