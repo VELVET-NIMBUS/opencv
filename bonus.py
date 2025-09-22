@@ -39,7 +39,8 @@ for i, contour in enumerate(contours):
         cv.putText(img,"Triangle",(x,y-10),cv.FONT_HERSHEY_SIMPLEX,0.5,(255,0,0),2)
         trig +=1
     elif (len(approx)==4):
-        (x,y,w,h) = cv.boundingRect(approx)
+        ((a,b),(w,h),rad) = cv.minAreaRect(approx)
+        (x,y,z,g) = cv.boundingRect(approx)
         aspect_ratio = w/float(h)
 
         if 0.95<= aspect_ratio <=1.05:
